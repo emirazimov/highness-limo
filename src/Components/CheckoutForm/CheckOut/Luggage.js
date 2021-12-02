@@ -1,3 +1,4 @@
+import { makeStyles } from "@material-ui/core"
 import Grid from "@material-ui/core/Grid"
 import Typography from "@material-ui/core/Typography"
 import React from "react"
@@ -10,7 +11,19 @@ import {
 } from "../../../assets/icons"
 import "./index.css"
 
+const useStyles = makeStyles((theme) => ({
+  mainPlusMinusContainer: {
+    height: "34px",
+
+    borderBottom: "2px solid #AC8159",
+    transition: "200ms",
+    "&:hover": { borderBottom: "2px solid white", transition: "200ms" },
+  },
+}))
+
 const Luggage = ({ luggage, setLuggage }) => {
+  const classes = useStyles()
+
   const { register } = useFormContext()
 
   //   const [hoursAddressForm, setHoursAddressForm] = useState(0)
@@ -51,12 +64,20 @@ const Luggage = ({ luggage, setLuggage }) => {
           </Typography>
         </Grid>
       </Grid>
-      <Grid item>
+      <Grid item style={{ marginRight: "8px" }}>
         <Grid
           container
           direction="row"
           justify="space-around"
           alignItems="center"
+          className={classes.mainPlusMinusContainer}
+          // style={{
+          //   // background: "#282828",
+          //   // height: "35px",
+          //   // borderRadius: "5px",
+          //   height: "34px",
+          //   // paddingTop: "-4px",
+          // }}
         >
           <Grid item>
             <span
@@ -70,9 +91,8 @@ const Luggage = ({ luggage, setLuggage }) => {
             item
             style={{
               textAlign: "center",
-              borderBottom: "2px solid #AC8159",
-              marginTop: "6px",
-              paddingBottom: "2px",
+              // borderBottom: "2px solid #AC8159",
+              // height: "105%",
             }}
           >
             <input
@@ -86,11 +106,11 @@ const Luggage = ({ luggage, setLuggage }) => {
               size="1"
               style={{
                 // pointerEvents: "none",
-                minWidth: "30px",
-                maxWidth: "30px",
-                marginLeft: "2px",
-                marginRight: "2.5px",
-                marginBottom: "4px",
+                minWidth: "34px",
+                maxWidth: "34px",
+                // marginLeft: "2px",
+                // marginRight: "2.5px",
+                // marginBottom: "4px",
                 backgroundColor: "transparent",
                 border: "none",
                 color: "white",
@@ -99,6 +119,7 @@ const Luggage = ({ luggage, setLuggage }) => {
                 textTransform: "none",
                 fontWeight: "400",
                 fontSize: "14px",
+                height: "100%",
               }}
               type="number"
             />
@@ -106,10 +127,12 @@ const Luggage = ({ luggage, setLuggage }) => {
           <Grid item>
             <span
               onClick={onIncrease}
-              style={{
-                // marginLeft: "4px",
-                marginRight: "7px",
-              }}
+              style={
+                {
+                  // marginLeft: "4px",
+                  // marginRight: "7px",
+                }
+              }
             >
               <PlusIcon />
             </span>

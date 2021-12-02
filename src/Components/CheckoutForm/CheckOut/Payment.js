@@ -121,18 +121,28 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "5px",
     color: "white",
     "& $svg": {
-      width: "15px",
-      height: "15px",
+      width: "18px",
+      height: "18px",
     },
   },
   checkbox: {
     "& $svg": {
-      width: "45px",
-      height: "45px",
+      // width: "45px",
+      // height: "45px",
     },
+    // "& .MuiSvgIcon-root": {
+    //   width: "70px",
+    //   height: "70px",
+    // },
     "&:hover": {
       color: "grey",
       background: "black",
+    },
+  },
+  checkboxMain: {
+    "& .MuiSvgIcon-root": {
+      width: "30px",
+      height: "30px",
     },
   },
   backButtonSelf: {
@@ -847,6 +857,7 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
               <Checkbox
                 style={{ color: "#9e9e9e" }}
                 onClick={() => setChecked(!checked)}
+                className={classes.checkboxMain}
                 InputProps={{
                   classes: {
                     root: classes.checkbox,

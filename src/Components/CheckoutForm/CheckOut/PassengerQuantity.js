@@ -1,4 +1,4 @@
-import { useMediaQuery } from "@material-ui/core"
+import { makeStyles, useMediaQuery } from "@material-ui/core"
 import Grid from "@material-ui/core/Grid"
 import Typography from "@material-ui/core/Typography"
 import React from "react"
@@ -10,6 +10,14 @@ import {
   PlusIcon,
 } from "../../../assets/icons"
 import "./index.css"
+const useStyles = makeStyles((theme) => ({
+  mainPlusMinusContainer: {
+    height: "34px",
+    borderBottom: "2px solid #AC8159",
+    transition: "200ms",
+    "&:hover": { borderBottom: "2px solid white", transition: "200ms" },
+  },
+}))
 
 export default React.memo(function PassengerQuantity({
   passengersqState,
@@ -18,6 +26,7 @@ export default React.memo(function PassengerQuantity({
   passengersQuantityForBackStep,
   setPassengersQuantityForBackStep,
 }) {
+  const classes = useStyles()
   const { register } = useFormContext()
 
   const onDecrease = () => {
@@ -69,10 +78,12 @@ export default React.memo(function PassengerQuantity({
           direction="row"
           justify="space-around"
           alignItems="center"
+          className={classes.mainPlusMinusContainer}
           // style={{
-          //   background: "#282828",
-          //   height: "35px",
-          //   borderRadius: "5px",
+          //   // background: "#282828",
+          //   // height: "35px",
+          //   // borderRadius: "5px",
+
           //   // paddingTop: "-4px",
           // }}
         >
@@ -95,12 +106,10 @@ export default React.memo(function PassengerQuantity({
             </span>
           </Grid>
           <Grid
-            item
             style={{
               textAlign: "center",
-              borderBottom: "2px solid #AC8159",
-              marginTop: "6px",
-              paddingBottom: "2px",
+              // borderBottom: "2px solid #AC8159",
+              // height: "100%",
             }}
           >
             <input
@@ -115,11 +124,11 @@ export default React.memo(function PassengerQuantity({
               size="1"
               style={{
                 // pointerEvents: "none",
-                minWidth: "30px",
-                maxWidth: "30px",
-                marginLeft: "2px",
-                marginRight: "2.5px",
-                marginBottom: "4px",
+                minWidth: "34px",
+                maxWidth: "34px",
+                // marginLeft: "2px",
+                // marginRight: "2.5px",
+                // marginBottom: "4px",
                 backgroundColor: "transparent",
                 border: "none",
                 color: "white",
@@ -128,6 +137,7 @@ export default React.memo(function PassengerQuantity({
                 textTransform: "none",
                 fontWeight: "400",
                 fontSize: "14px",
+                // height: "100%",
                 // borderBottom: "2px solid #AC8159",
               }}
               type="number"

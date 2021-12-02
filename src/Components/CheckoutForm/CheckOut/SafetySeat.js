@@ -1,4 +1,4 @@
-import { useMediaQuery } from "@material-ui/core"
+import { makeStyles, useMediaQuery } from "@material-ui/core"
 import Grid from "@material-ui/core/Grid"
 import Typography from "@material-ui/core/Typography"
 import React from "react"
@@ -11,12 +11,22 @@ import {
 } from "../../../assets/icons"
 import "./index.css"
 
+const useStyles = makeStyles((theme) => ({
+  mainPlusMinusContainer: {
+    height: "34px",
+    borderBottom: "2px solid #AC8159",
+    transition: "200ms",
+    "&:hover": { borderBottom: "2px solid white", transition: "200ms" },
+  },
+}))
+
 export default React.memo(function SafetySeat({
   setBoosterSeat,
   setChildSafetySeat,
   boosterSeat,
   childSafetySeat,
 }) {
+  const classes = useStyles()
   const { register } = useFormContext()
 
   const onDecreaseBoosterSeat = () => {
@@ -88,10 +98,12 @@ export default React.memo(function SafetySeat({
               direction="row"
               justify="space-around"
               alignItems="center"
+              className={classes.mainPlusMinusContainer}
               // style={{
-              //   background: "#282828",
-              //   height: "35px",
-              //   borderRadius: "5px",
+              //   // background: "#282828",
+              //   // height: "35px",
+              //   // borderRadius: "5px",
+              //   height: "34px",
               //   // paddingTop: "-4px",
               // }}
             >
@@ -111,9 +123,11 @@ export default React.memo(function SafetySeat({
                 item
                 style={{
                   textAlign: "center",
-                  borderBottom: "2px solid #AC8159",
-                  marginTop: "6px",
-                  paddingBottom: "2px",
+                  // borderBottom: "2px solid #AC8159",
+                  // marginTop: "6px",
+                  // paddingBottom: "2px",
+                  // borderBottom: "2px solid #AC8159",
+                  // height: "105%",
                 }}
               >
                 <input
@@ -127,11 +141,11 @@ export default React.memo(function SafetySeat({
                   size="1"
                   style={{
                     // pointerEvents: "none",
-                    minWidth: "30px",
-                    maxWidth: "30px",
-                    marginLeft: "2px",
-                    marginRight: "2.5px",
-                    marginBottom: "4px",
+                    minWidth: "34px",
+                    maxWidth: "34px",
+                    // marginLeft: "2px",
+                    // marginRight: "2.5px",
+                    // marginBottom: "4px",
                     backgroundColor: "transparent",
                     border: "none",
                     color: "white",
@@ -140,6 +154,7 @@ export default React.memo(function SafetySeat({
                     textTransform: "none",
                     fontWeight: "400",
                     fontSize: "14px",
+                    height: "100%",
                   }}
                   type="number"
                 />
@@ -187,10 +202,12 @@ export default React.memo(function SafetySeat({
               direction="row"
               justify="space-around"
               alignItems="center"
+              className={classes.mainPlusMinusContainer}
               // style={{
-              //   background: "#282828",
-              //   height: "35px",
-              //   borderRadius: "5px",
+              //   // background: "#282828",
+              //   // height: "35px",
+              //   // borderRadius: "5px",
+              //   height: "34px",
               //   // paddingTop: "-4px",
               // }}
             >
@@ -210,9 +227,11 @@ export default React.memo(function SafetySeat({
                 item
                 style={{
                   textAlign: "center",
-                  borderBottom: "2px solid #AC8159",
-                  marginTop: "6px",
-                  paddingBottom: "2px",
+                  // borderBottom: "2px solid #AC8159",
+                  // marginTop: "6px",
+                  // paddingBottom: "2px",
+                  // borderBottom: "2px solid #AC8159",
+                  // height: "105%",
                 }}
               >
                 <input
@@ -226,11 +245,11 @@ export default React.memo(function SafetySeat({
                   size="1"
                   style={{
                     // pointerEvents: "none",
-                    minWidth: "30px",
-                    maxWidth: "30px",
-                    marginLeft: "2px",
-                    marginRight: "2.5px",
-                    marginBottom: "4px",
+                    minWidth: "34px",
+                    maxWidth: "34px",
+                    // marginLeft: "2px",
+                    // marginRight: "2.5px",
+                    // marginBottom: "4px",
                     backgroundColor: "transparent",
                     border: "none",
                     color: "white",
@@ -239,6 +258,7 @@ export default React.memo(function SafetySeat({
                     textTransform: "none",
                     fontWeight: "400",
                     fontSize: "14px",
+                    height: "100%",
                   }}
                   type="number"
                 />
