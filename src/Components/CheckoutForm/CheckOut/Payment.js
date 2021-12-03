@@ -26,7 +26,7 @@ import {
 import PrivacyPolicy from "./../../TermsOfUse/PrivacyPolicy"
 import TermsOfUse from "./../../TermsOfUse/TermOfUse"
 import { withStyles } from "@material-ui/styles"
-import { Number, Cvc, Expiration } from "react-credit-card-primitives"
+// import { Number, Cvc, Expiration } from "react-credit-card-primitives"
 
 import Cleave from "cleave.js/react"
 import "./PaymentStyles.css"
@@ -277,7 +277,7 @@ const SignupSchema = yup.object().shape({
     phoneNumber: yup.number().typeError("Not a number").required("Required"),
   }),
   paymentInfo: yup.object().shape({
-    cardNumber: yup.string().required("Required"),
+    // cardNumber: yup.string().required("Required"),
     month: yup.string().required("Required"),
     cvc: yup.number().required("Required").typeError("Not a number"),
   }),
@@ -339,14 +339,22 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
 
   const [statesIdError, setStatesIdError] = React.useState(null)
   const [citiesIdError, setCitiesIdError] = React.useState(null)
-
+  const [cardForPaymentSubmit, setCardForPaymentSubmit] = useState(null)
+  const [cardForPaymentSubmitError, setCardForPaymentSubmitError] =
+    useState(null)
   const [restrictAmex, setRestrictAmex] = React.useState(false)
 
   const onSubmit = (data) => {
     console.log(data)
     const date = data.paymentInfo.month.split("/")
-    if ((statesId, citiesId)) {
-      setPaymentForm({ ...data }, citiesId, statesId, date)
+    if ((statesId, citiesId, cardForPaymentSubmit)) {
+      setPaymentForm(
+        { ...data },
+        citiesId,
+        statesId,
+        date,
+        cardForPaymentSubmit
+      )
       next()
     } else {
       if (!statesId) {
@@ -359,6 +367,11 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
       } else {
         setCitiesIdError(false)
       }
+      if (!cardForPaymentSubmitError) {
+        setCardForPaymentSubmitError(true)
+      } else {
+        setCardForPaymentSubmitError(false)
+      }
     }
   }
 
@@ -370,6 +383,8 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
 
   const handleNum = (e) => {
     setCreditCardNum(e.target.rawValue)
+    setCardForPaymentSubmit(e.target.value)
+    console.log(e.target.value)
     // console.log(e.target.value);
   }
 
@@ -816,15 +831,15 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
                   creditCard: true,
                   onCreditCardTypeChanged: handleType,
                 }}
+                name="paymentInfo.cardNumber"
+                error={errors.paymentInfo?.cardNumber ? true : false}
                 onChange={handleNum}
                 placeholder="Card number"
                 className="credit-card-input-by-bookinglane"
               />
 
-              {errors.paymentInfo?.cardNumber && (
-                <p className={classes.error}>
-                  {errors.paymentInfo?.cardNumber.message}
-                </p>
+              {cardForPaymentSubmitError && (
+                <p className={classes.error}>Required</p>
               )}
             </Grid>
             <Grid item>

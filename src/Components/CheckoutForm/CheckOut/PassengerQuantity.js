@@ -53,7 +53,13 @@ export default React.memo(function PassengerQuantity({
   //   }, [passengersqState])
   const isMobile = useMediaQuery("(max-width:340px)")
   return (
-    <Grid container direction="row" justify="space-between" alignItems="center">
+    <Grid
+      container
+      direction="row"
+      justify="space-between"
+      alignItems="center"
+      style={{ marginTop: "13px" }}
+    >
       <Grid item>
         <Grid container direction="row">
           <NumberOfPassengersIcon
