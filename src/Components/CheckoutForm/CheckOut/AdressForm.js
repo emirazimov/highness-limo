@@ -446,6 +446,8 @@ const AdressFormwithoutReactMemo = ({
   setTimeForDefaultValueAMPM,
   setTimeForDefaultValueAlignment,
   setPassengersQuantityForBackStep,
+  isBoosterSeatExistOnBackend,
+  isSafetySeatExistOnBackend,
 }) => {
   const classes = useStyles()
   console.log("AdressFrom")
@@ -519,6 +521,8 @@ const AdressFormwithoutReactMemo = ({
     // mode: "onBlur",
     // resolver: yupResolver(schema),
   })
+
+  console.log(isBoosterSeatExistOnBackend, isSafetySeatExistOnBackend)
 
   const onSubmit = (data) => {
     console.log(data)
@@ -1485,70 +1489,71 @@ const AdressFormwithoutReactMemo = ({
                   <Luggage luggage={luggage} setLuggage={setLuggage} />
                 </>
               )}
-
-              <Grid item style={{ width: "100%", marginTop: "6px" }}>
-                <Grid
-                  container
-                  direction="row"
-                  justify="space-between"
-                  alignItems="center"
-                >
-                  <Grid item>
-                    <Grid
-                      container
-                      direction="row"
-                      alignItems="center"
-                      style={{ paddingLeft: "8px" }}
-                    >
-                      <SafetySeatIcon />
-                      <Typography
-                        className={classes.swichesTextColor}
-                        style={{
-                          fontSize: "14px",
-                          marginLeft: "9px",
-                        }}
+              {(isBoosterSeatExistOnBackend || isSafetySeatExistOnBackend) && (
+                <Grid item style={{ width: "100%", marginTop: "6px" }}>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="space-between"
+                    alignItems="center"
+                  >
+                    <Grid item>
+                      <Grid
+                        container
+                        direction="row"
+                        alignItems="center"
+                        style={{ paddingLeft: "8px" }}
                       >
-                        Safety Seat
-                      </Typography>
+                        <SafetySeatIcon />
+                        <Typography
+                          className={classes.swichesTextColor}
+                          style={{
+                            fontSize: "14px",
+                            marginLeft: "9px",
+                          }}
+                        >
+                          Safety Seat
+                        </Typography>
+                      </Grid>
                     </Grid>
-                  </Grid>
-                  <AntSwitch
-                    color="primary"
-                    // disabled={disableHourly}
-                    checked={safetySeat}
-                    onClick={() => {
-                      // if (hourly == false) {
-                      //   // // setIsGateMeeting(true)
-                      //   // setGateMeetingRedux(true)
-                      //   setHourly(true)
-                      //   // hourly = true
-                      //   console.log("true")
-                      //   console.log(hourly)
-                      // } else {
-                      //   // setIsGateMeeting(false)
-                      //   // setGateMeetingRedux(false)
-                      //   setHourly(true)
-                      //   // hourly = false
-                      //   console.log("false")
-                      //   console.log(hourly)
-                      // }
-                      // if (!hourlyAndSeatsRedux) {
-                      //   // setIsGateMeeting(true)
-                      //   setHourlyRedux(true)
-                      //   // console.log("true")
-                      // } else {
-                      //   // setIsGateMeeting(false)
-                      //   setHourlyRedux(false)
-                      //   // console.log("false")
-                      // }
-                      setSafetySeat(!safetySeat)
+                    <AntSwitch
+                      color="primary"
+                      // disabled={disableHourly}
+                      checked={safetySeat}
+                      onClick={() => {
+                        // if (hourly == false) {
+                        //   // // setIsGateMeeting(true)
+                        //   // setGateMeetingRedux(true)
+                        //   setHourly(true)
+                        //   // hourly = true
+                        //   console.log("true")
+                        //   console.log(hourly)
+                        // } else {
+                        //   // setIsGateMeeting(false)
+                        //   // setGateMeetingRedux(false)
+                        //   setHourly(true)
+                        //   // hourly = false
+                        //   console.log("false")
+                        //   console.log(hourly)
+                        // }
+                        // if (!hourlyAndSeatsRedux) {
+                        //   // setIsGateMeeting(true)
+                        //   setHourlyRedux(true)
+                        //   // console.log("true")
+                        // } else {
+                        //   // setIsGateMeeting(false)
+                        //   setHourlyRedux(false)
+                        //   // console.log("false")
+                        // }
+                        setSafetySeat(!safetySeat)
 
-                      // setHourlyRedux()
-                      // hourly ? setBookingType(2) : setBookingType(1)
-                    }}
-                  />
+                        // setHourlyRedux()
+                        // hourly ? setBookingType(2) : setBookingType(1)
+                      }}
+                    />
+                  </Grid>
                 </Grid>
-              </Grid>
+              )}
               <Grid item style={{ width: "100%" }}>
                 {safetySeat === true && (
                   <Grid item>
@@ -1811,6 +1816,9 @@ const mapStateToProps = (state) => {
     resetInputs: state.resetWidgetInputs.resetInputs,
     gateMeeting: state.gateMeeting.isGateMeeting,
     hourlyAndSeatsRedux: state.hourlyAndSeatsRedux.hourlyRedux,
+    isBoosterSeatExistOnBackend:
+      state.companyProfile.isBoosterSeatExistOnBackend,
+    isSafetySeatExistOnBackend: state.companyProfile.isSafetySeatExistOnBackend,
   }
 }
 

@@ -59,12 +59,13 @@ export default React.memo(function SafetySeat({
   //     setPassengers(parseInt(passengersqState))
   //   }, [passengersqState])
   const isMobile = useMediaQuery("(max-width:340px)")
+  const shouldSafetySeatBeColumnDirection = useMediaQuery("(max-width:420px)")
   return (
     <Grid
       container
-      direction="row"
+      direction={shouldSafetySeatBeColumnDirection ? "column" : "row"}
       justify="space-between"
-      alignItems="center"
+      alignItems={shouldSafetySeatBeColumnDirection ? "flex-start" : "center"}
       style={{ paddingLeft: "9px" }}
     >
       <Grid item>
@@ -73,6 +74,10 @@ export default React.memo(function SafetySeat({
           direction="column"
           justify="space-between"
           alignItems="center"
+          style={{
+            marginTop: shouldSafetySeatBeColumnDirection ? "10px" : "0px",
+            marginBottom: shouldSafetySeatBeColumnDirection ? "39px" : "0px",
+          }}
         >
           <Grid item>
             <Grid container direction="row">
@@ -176,7 +181,12 @@ export default React.memo(function SafetySeat({
           container
           direction="column"
           justify="space-between"
-          alignItems="center"
+          alignItems={
+            shouldSafetySeatBeColumnDirection ? "flex-start" : "center"
+          }
+          style={{
+            marginBottom: shouldSafetySeatBeColumnDirection ? "29px" : "0px",
+          }}
         >
           <Grid item>
             <Grid container direction="row">

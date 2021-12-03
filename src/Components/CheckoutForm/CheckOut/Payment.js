@@ -26,6 +26,10 @@ import {
 import PrivacyPolicy from "./../../TermsOfUse/PrivacyPolicy"
 import TermsOfUse from "./../../TermsOfUse/TermOfUse"
 import { withStyles } from "@material-ui/styles"
+import { Number, Cvc, Expiration } from "react-credit-card-primitives"
+
+import Cleave from "cleave.js/react"
+import "./PaymentStyles.css"
 
 const useStyles = makeStyles((theme) => ({
   contentContainer: {
@@ -336,6 +340,8 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
   const [statesIdError, setStatesIdError] = React.useState(null)
   const [citiesIdError, setCitiesIdError] = React.useState(null)
 
+  const [restrictAmex, setRestrictAmex] = React.useState(false)
+
   const onSubmit = (data) => {
     console.log(data)
     const date = data.paymentInfo.month.split("/")
@@ -354,6 +360,42 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
         setCitiesIdError(false)
       }
     }
+  }
+
+  // const toggleAmex = () => setRestrictAmex(!restrictAmex)
+
+  const [cardType, setCardType] = useState("")
+
+  const [creditCardNum, setCreditCardNum] = useState("#### #### #### ####")
+
+  const handleNum = (e) => {
+    setCreditCardNum(e.target.rawValue)
+    // console.log(e.target.value);
+  }
+
+  const handleType = (type) => {
+    setCardType(type)
+    console.log(type)
+
+    // if (type === "visa") {
+    //   setCardTypeUrl(imageUrls[0])
+    //   console.log("Visa")
+    // } else if (type === "mastercard") {
+    //   setCardTypeUrl(imageUrls[1])
+    //   console.log("Mastercard")
+    // } else if (type === "discover") {
+    //   setCardTypeUrl(imageUrls[2])
+    //   console.log("Discover")
+    // } else if (type === "amex") {
+    //   setCardTypeUrl(imageUrls[3])
+    //   console.log("Amex")
+    // } else if (type === "diners") {
+    //   console.log("Diners")
+    //   setCardTypeUrl(imageUrls[4])
+    // } else if (type === "jcb") {
+    //   console.log("JCB")
+    //   setCardTypeUrl(imageUrls[5])
+    // }
   }
 
   return (
@@ -738,7 +780,7 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
               </Typography>
             </Grid>
             <Grid item>
-              <CustomMaskInput
+              {/* <CustomMaskInput
                 name="paymentInfo.cardNumber"
                 mask="9999-9999-9999-9999"
                 autoComplete="off"
@@ -753,7 +795,7 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
                     style={{ background: "transparent" }}
                     fullWidth
                     error={errors.paymentInfo?.cardNumber ? true : false}
-                    inputProps={{ style: inputStyle }}
+                    // inputProps={{ style: inputStyle }}
                     InputProps={{
                       // ...params.InputProps,
                       // style: { inputStyle },
@@ -766,7 +808,19 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
                     }}
                   />
                 )}
-              </CustomMaskInput>
+              </CustomMaskInput> */}
+
+              <Cleave
+                delimiter="-"
+                options={{
+                  creditCard: true,
+                  onCreditCardTypeChanged: handleType,
+                }}
+                onChange={handleNum}
+                placeholder="Card number"
+                className="credit-card-input-by-bookinglane"
+              />
+
               {errors.paymentInfo?.cardNumber && (
                 <p className={classes.error}>
                   {errors.paymentInfo?.cardNumber.message}
@@ -796,7 +850,7 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
                         fullWidth
                         error={errors.paymentInfo?.month ? true : false}
                         style={{ background: "transparent" }}
-                        inputProps={{ style: inputStyle }}
+                        // inputProps={{ style: inputStyle }}
                         InputProps={{
                           // ...params.InputProps,
                           classes: {
@@ -832,7 +886,7 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
                         fullWidth
                         error={errors.paymentInfo?.cvc ? true : false}
                         style={{ background: "transparent" }}
-                        inputProps={{ style: inputStyle }}
+                        // inputProps={{ style: inputStyle }}
                         InputProps={{
                           // ...params.InputProps,
                           classes: {

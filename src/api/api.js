@@ -12,11 +12,13 @@ const axiosInstance = axios.create({
 
 export const authApi = {
   getToken() {
-    const company0Key = "ce08a63f-2549-4c1e-815a-23212b23a101"
+    const company0Key = "14862f6b-0e7a-47d0-810a-06a348fd9ec1"
     return axios
       .post(
         "https://api.bookinglane.com/api/companywidget/company-widget-auth",
-        { accessKey: "ce08a63f-2549-4c1e-815a-23212b23a101" }
+        {
+          accessKey: "ce08a63f-2549-4c1e-815a-23212b23a101",
+        }
       )
       .then((response) => {
         return response
