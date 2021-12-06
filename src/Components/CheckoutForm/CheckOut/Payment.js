@@ -1,136 +1,136 @@
-import React, { useState, useEffect } from 'react'
-import { connect } from 'react-redux'
-import { FormProvider, useForm } from 'react-hook-form'
+import React, { useState, useEffect } from "react"
+import { connect } from "react-redux"
+import { FormProvider, useForm } from "react-hook-form"
 import {
   CustomFormInput,
   CustomFormInputForPayment,
   CustomMaskInput,
-} from './CustomFormInput'
-import { makeStyles } from '@material-ui/core/styles'
-import { BackArrowIcon } from '../../../assets/icons'
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import Autocomplete from '@material-ui/lab/Autocomplete'
-import Button from '@material-ui/core/Button'
-import Checkbox from '@material-ui/core/Checkbox'
-import Switch from '@material-ui/core/Switch'
-import { Link } from '@material-ui/core'
-import { placesApi } from '../../../api/api'
-import TextField from '@material-ui/core/TextField'
+} from "./CustomFormInput"
+import { makeStyles } from "@material-ui/core/styles"
+import { BackArrowIcon } from "../../../assets/icons"
+import { yupResolver } from "@hookform/resolvers/yup"
+import * as yup from "yup"
+import Grid from "@material-ui/core/Grid"
+import Typography from "@material-ui/core/Typography"
+import Autocomplete from "@material-ui/lab/Autocomplete"
+import Button from "@material-ui/core/Button"
+import Checkbox from "@material-ui/core/Checkbox"
+import Switch from "@material-ui/core/Switch"
+import { Link } from "@material-ui/core"
+import { placesApi } from "../../../api/api"
+import TextField from "@material-ui/core/TextField"
 import {
   createReservation,
   setPaymentForm,
-} from './../../../Redux/form-reducer'
-import PrivacyPolicy from './../../TermsOfUse/PrivacyPolicy'
-import TermsOfUse from './../../TermsOfUse/TermOfUse'
-import { withStyles } from '@material-ui/styles'
+} from "./../../../Redux/form-reducer"
+import PrivacyPolicy from "./../../TermsOfUse/PrivacyPolicy"
+import TermsOfUse from "./../../TermsOfUse/TermOfUse"
+import { withStyles } from "@material-ui/styles"
 // import { Number, Cvc, Expiration } from "react-credit-card-primitives"
 
-import Cleave from 'cleave.js/react'
-import './PaymentStyles.css'
+import Cleave from "cleave.js/react"
+import "./PaymentStyles.css"
 
 const useStyles = makeStyles((theme) => ({
   contentContainer: {
     padding: theme.spacing(2),
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(2.2),
-    backgroundColor: 'black',
+    backgroundColor: "black",
   },
   buttonGroup: {
     paddingTop: theme.spacing(0),
   },
   error: {
-    color: '#db5858',
-    margin: '0px',
-    paddingTop: '4px',
-    fontSize: '13px',
+    color: "#db5858",
+    margin: "0px",
+    paddingTop: "4px",
+    fontSize: "13px",
   },
   inputRoot: {
-    height: '40px',
+    height: "40px",
   },
   inputRootAutocomplete: {
-    height: '40px',
-    background: 'black',
-    borderRadius: '10px',
-    paddingLeft: '13px',
-    color: 'white',
-    boxShadow: '0px 5px 30px rgba(0, 0, 0, 0.1)',
-    borderRadius: '0',
+    height: "40px",
+    background: "black",
+    borderRadius: "10px",
+    paddingLeft: "13px",
+    color: "white",
+    boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.1)",
+    borderRadius: "0",
 
-    '&::placeholder': {
-      color: 'black',
-      opacity: '1',
-      fontSize: '10px',
+    "&::placeholder": {
+      color: "black",
+      opacity: "1",
+      fontSize: "10px",
     },
-    fontSize: '14px',
+    fontSize: "14px",
   },
   inputRootAutocompleteCardNumber: {
-    height: '40px',
-    background: 'black',
-    paddingLeft: '13px',
-    color: 'white',
-    boxShadow: '0px 5px 30px rgba(0, 0, 0, 0.1)',
-    borderRadius: '0px',
-    '&::placeholder': {
-      color: 'black',
-      opacity: '1',
-      fontSize: '10px',
+    height: "40px",
+    background: "black",
+    paddingLeft: "13px",
+    color: "white",
+    boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.1)",
+    borderRadius: "0px",
+    "&::placeholder": {
+      color: "black",
+      opacity: "1",
+      fontSize: "10px",
     },
-    fontSize: '14px',
+    fontSize: "14px",
   },
   inputPlaceholder: {
-    height: '40px',
+    height: "40px",
 
-    '&::placeholder': {
-      color: 'black',
-      opacity: '1',
-      fontSize: '10px',
+    "&::placeholder": {
+      color: "black",
+      opacity: "1",
+      fontSize: "10px",
     },
   },
   noBorder: {
     // border: "1px solid transparent",
     // border: "none",
-    '&:before': {
-      borderBottom: '2px solid #AC8159',
+    "&:before": {
+      borderBottom: "2px solid #AC8159",
     },
-    '&::placeholder': {
-      color: 'black',
-      opacity: '1',
-      fontSize: '16px',
+    "&::placeholder": {
+      color: "black",
+      opacity: "1",
+      fontSize: "16px",
     },
   },
   inputPlaceholderFontSize: {
-    border: '1px solid black',
-    borderRadius: '0px',
-    '& input::placeholder': {
-      fontSize: '14px',
+    border: "1px solid black",
+    borderRadius: "0px",
+    "& input::placeholder": {
+      fontSize: "14px",
     },
 
-    fontSize: '14px',
+    fontSize: "14px",
   },
   inputRootAutocomplete2: {
-    height: '40px',
-    WebkitBoxShadow: '0 0 0 1000px white inset',
-    height: '0px',
+    height: "40px",
+    WebkitBoxShadow: "0 0 0 1000px white inset",
+    height: "0px",
     // "& .MuiTextField-root ": {
     //   background: "red",
     // },
     // background: "transparent",
   },
   popupIndicator: {
-    height: '100%',
-    marginTop: '5px',
-    marginRight: '5px',
-    color: 'white',
-    '& $svg': {
-      width: '18px',
-      height: '18px',
+    height: "100%",
+    marginTop: "5px",
+    marginRight: "5px",
+    color: "white",
+    "& $svg": {
+      width: "18px",
+      height: "18px",
     },
   },
   checkbox: {
-    '& $svg': {
+    "& $svg": {
       // width: "45px",
       // height: "45px",
     },
@@ -138,81 +138,81 @@ const useStyles = makeStyles((theme) => ({
     //   width: "70px",
     //   height: "70px",
     // },
-    '&:hover': {
-      color: 'grey',
-      background: 'black',
+    "&:hover": {
+      color: "grey",
+      background: "black",
     },
   },
   checkboxMain: {
-    '& .MuiSvgIcon-root': {
-      width: '30px',
-      height: '30px',
+    "& .MuiSvgIcon-root": {
+      width: "30px",
+      height: "30px",
     },
   },
   backButtonSelf: {
-    backgroundColor: '#AC8159',
-    border: '1px solid transparent',
-    color: 'black',
-    borderRadius: '25px',
-    '&:hover': {
-      background: 'black',
-      border: '1px solid #AC8159',
-      color: 'white',
+    backgroundColor: "#AC8159",
+    border: "1px solid transparent",
+    color: "black",
+    borderRadius: "25px",
+    "&:hover": {
+      background: "black",
+      border: "1px solid #AC8159",
+      color: "white",
     },
   },
   payButtonSelf: {
-    backgroundColor: '#AC8159',
-    border: '1px solid transparent',
-    color: 'black',
-    borderRadius: '25px',
-    '&:hover': {
-      background: 'black',
-      border: '1px solid #AC8159',
-      color: 'white',
+    backgroundColor: "#AC8159",
+    border: "1px solid transparent",
+    color: "black",
+    borderRadius: "25px",
+    "&:hover": {
+      background: "black",
+      border: "1px solid #AC8159",
+      color: "white",
     },
-    '&.MuiButton-contained.Mui-disabled': {
-      backgroundColor: '#4F4F4F',
+    "&.MuiButton-contained.Mui-disabled": {
+      backgroundColor: "#4F4F4F",
     },
   },
   option: {
-    backgroundColor: 'black',
-    color: 'white',
-    '&:hover': {
-      backgroundColor: '#4F4F4F',
+    backgroundColor: "black",
+    color: "white",
+    "&:hover": {
+      backgroundColor: "#4F4F4F",
     },
-    '&$selected': {
-      backgroundColor: '#4F4F4F',
+    "&$selected": {
+      backgroundColor: "#4F4F4F",
     },
   },
   selectedOption: {
-    backgroundColor: '#4F4F4F',
-    '&$selected': {
-      backgroundColor: '#4F4F4F',
+    backgroundColor: "#4F4F4F",
+    "&$selected": {
+      backgroundColor: "#4F4F4F",
     },
   },
   input: {
     // height: "40px",
 
-    '&:-webkit-autofill': {
-      height: '0px',
-      border: 'none',
-      borderRadius: '0px',
-      WebkitBoxShadow: '0 0 0 1000px transparent inset',
-      WebkitTextFillColor: 'white',
-      backgroundColor: 'transparent !important',
-      backgroundClip: 'content-box !important',
+    "&:-webkit-autofill": {
+      height: "0px",
+      border: "none",
+      borderRadius: "0px",
+      WebkitBoxShadow: "0 0 0 1000px transparent inset",
+      WebkitTextFillColor: "white",
+      backgroundColor: "transparent !important",
+      backgroundClip: "content-box !important",
     },
     // "MuiOutlinediput-input:-webkit-autofill": {
     //   WebkitTextFillColor: "black",
     // },
   },
   mainAutocompleteClass: {
-    '& .MuiAutocomplete-inputRoot': {
-      borderRadius: '0px',
+    "& .MuiAutocomplete-inputRoot": {
+      borderRadius: "0px",
     },
   },
   paymentTexts: {
-    color: 'white',
+    color: "white",
   },
 }))
 
@@ -222,41 +222,41 @@ const AntSwitch = withStyles((theme) => ({
     height: 23,
     padding: 0,
     paddingBottom: 2,
-    display: 'flex',
+    display: "flex",
   },
   switchBase: {
-    '&:hover': {
-      paddingRight: '2.7px',
-      paddingBottom: '3px',
-      color: '#AC8159',
+    "&:hover": {
+      paddingRight: "2.7px",
+      paddingBottom: "3px",
+      color: "#AC8159",
     },
     padding: 2,
-    paddingTop: '2.2px',
-    color: '#523C29',
+    paddingTop: "2.2px",
+    color: "#523C29",
 
-    '&$checked': {
-      transform: 'translateX(16px)',
-      color: '#AC8159',
+    "&$checked": {
+      transform: "translateX(16px)",
+      color: "#AC8159",
 
-      '& + $track': {
+      "& + $track": {
         opacity: 1,
-        backgroundColor: 'black',
-        borderColor: '#AC8159',
+        backgroundColor: "black",
+        borderColor: "#AC8159",
       },
     },
   },
   thumb: {
     width: 14,
     height: 14,
-    boxShadow: 'none',
-    marginTop: '1.5px',
-    marginLeft: '2px',
+    boxShadow: "none",
+    marginTop: "1.5px",
+    marginLeft: "2px",
   },
   track: {
     border: `1px solid #AC8159`,
     borderRadius: 19,
     opacity: 1,
-    backgroundColor: 'black',
+    backgroundColor: "black",
   },
   checked: {},
 }))(Switch)
@@ -269,17 +269,17 @@ const SignupSchema = yup.object().shape({
   //     email: yup.string().email('invalid email').required('Required'),
   // }),
   client: yup.object().shape({
-    firstName: yup.string().required('Required'),
-    lastName: yup.string().required('Required'),
-    address: yup.string().required('Required'),
-    zip: yup.number().required('Required').typeError('Not a number'),
-    email: yup.string().email('invalid email').required('Required'),
-    phoneNumber: yup.number().typeError('Not a number').required('Required'),
+    firstName: yup.string().required("Required"),
+    lastName: yup.string().required("Required"),
+    address: yup.string().required("Required"),
+    zip: yup.number().required("Required").typeError("Not a number"),
+    email: yup.string().email("invalid email").required("Required"),
+    phoneNumber: yup.number().typeError("Not a number").required("Required"),
   }),
   paymentInfo: yup.object().shape({
     // cardNumber: yup.string().required("Required"),
-    month: yup.string().required('Required'),
-    cvc: yup.number().required('Required').typeError('Not a number'),
+    month: yup.string().required("Required"),
+    cvc: yup.number().required("Required").typeError("Not a number"),
   }),
 })
 
@@ -332,8 +332,8 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
   const [riderDetails, setRiderDetails] = React.useState(true)
 
   const inputStyle = {
-    WebkitBoxShadow: '0 0 0 1000px transparent inset',
-    height: '0px',
+    WebkitBoxShadow: "0 0 0 1000px transparent inset",
+    height: "0px",
     // width: "100%",
   }
 
@@ -346,14 +346,18 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
 
   const onSubmit = (data) => {
     console.log(data)
-    const date = data.paymentInfo.month.split('/')
-    if ((statesId, citiesId, cardForPaymentSubmit)) {
+    const date = data.paymentInfo.month.split("/")
+    if (
+      statesId &&
+      citiesId &&
+      (cardForPaymentSubmit || formSummary.paymentInfo.cardNumber)
+    ) {
       setPaymentForm(
         { ...data },
         citiesId,
         statesId,
         date,
-        cardForPaymentSubmit
+        cardForPaymentSubmit || formSummary.paymentInfo.cardNumber
       )
       next()
     } else {
@@ -367,7 +371,7 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
       } else {
         setCitiesIdError(false)
       }
-      if (!cardForPaymentSubmitError) {
+      if (!cardForPaymentSubmitError && !formSummary.paymentInfo.cardNumber) {
         setCardForPaymentSubmitError(true)
       } else {
         setCardForPaymentSubmitError(false)
@@ -377,9 +381,9 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
 
   // const toggleAmex = () => setRestrictAmex(!restrictAmex)
 
-  const [cardType, setCardType] = useState('')
+  const [cardType, setCardType] = useState("")
 
-  const [creditCardNum, setCreditCardNum] = useState('#### #### #### ####')
+  const [creditCardNum, setCreditCardNum] = useState("#### #### #### ####")
 
   const handleNum = (e) => {
     setCreditCardNum(e.target.rawValue)
@@ -416,17 +420,17 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Grid container justify='center' className={classes.contentContainer}>
-          <Grid container direction='column' spacing={2}>
+        <Grid container justify="center" className={classes.contentContainer}>
+          <Grid container direction="column" spacing={2}>
             <Grid item>
               <Typography
-                variant='body2'
+                variant="body2"
                 style={{
-                  fontFamily: 'Roboto',
+                  fontFamily: "Roboto",
                   fontWeight: 500,
                   // color: "white",
-                  fontSize: '22px',
-                  lineHeight: '36px',
+                  fontSize: "22px",
+                  lineHeight: "36px",
                 }}
                 className={classes.paymentTexts}
               >
@@ -436,17 +440,17 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
             <Grid item>
               <Grid
                 container
-                direction='row'
-                justify='space-between'
-                alignItems='center'
+                direction="row"
+                justify="space-between"
+                alignItems="center"
               >
                 <Grid item>
                   <Typography
                     // variant="body1"
                     style={{
                       //   marginTop: "7px",
-                      color: riderDetails ? 'white' : '#757575',
-                      fontSize: '15px',
+                      color: riderDetails ? "white" : "#757575",
+                      fontSize: "15px",
                     }}
                     className={classes.paymentTexts}
                     // style={{}}
@@ -458,16 +462,16 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
                   <AntSwitch
                     checked={riderDetails}
                     onClick={() => setRiderDetails(!riderDetails)}
-                    color='primary'
+                    color="primary"
                   />
                 </Grid>
               </Grid>
             </Grid>
             {!riderDetails && (
-              <Grid item style={{ paddingBottom: '20px' }}>
-                <Grid item style={{ paddingBottom: '13px' }}>
+              <Grid item style={{ paddingBottom: "20px" }}>
+                <Grid item style={{ paddingBottom: "13px" }}>
                   <Typography
-                    style={{ fontSize: '15px' }}
+                    style={{ fontSize: "15px" }}
                     className={classes.paymentTexts}
                   >
                     Passenger Detail
@@ -476,34 +480,34 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
                 <Grid item>
                   <Grid
                     container
-                    direction='row'
-                    justify='space-between'
+                    direction="row"
+                    justify="space-between"
                     spacing={2}
-                    style={{ marginBottom: '8px' }}
+                    style={{ marginBottom: "8px" }}
                   >
                     <Grid item xs={6}>
                       <CustomFormInputForPayment
-                        variant='standard'
-                        name='greetClientInfo.firstName'
-                        autoComplete='off'
-                        placeholder='First Name'
+                        variant="standard"
+                        name="greetClientInfo.firstName"
+                        autoComplete="off"
+                        placeholder="First Name"
                         className={classes.inputPlaceholderFontSize}
                         defaultValue={formSummary.greetClientInfo.firstName}
                         style={{
-                          width: '100%',
-                          background: 'transparent',
+                          width: "100%",
+                          background: "transparent",
                         }}
                       />
                     </Grid>
                     <Grid item xs={6}>
                       <CustomFormInputForPayment
-                        variant='standard'
-                        name='greetClientInfo.lastName'
-                        autoComplete='off'
+                        variant="standard"
+                        name="greetClientInfo.lastName"
+                        autoComplete="off"
                         className={classes.inputPlaceholderFontSize}
                         defaultValue={formSummary.greetClientInfo.lastName}
-                        placeholder='Last Name'
-                        style={{ width: '100%', background: 'transparent' }}
+                        placeholder="Last Name"
+                        style={{ width: "100%", background: "transparent" }}
                       />
                     </Grid>
                   </Grid>
@@ -511,30 +515,30 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
                 <Grid item>
                   <Grid
                     container
-                    direction='row'
-                    justify='space-between'
+                    direction="row"
+                    justify="space-between"
                     spacing={2}
                   >
                     <Grid item xs={6}>
                       <CustomFormInputForPayment
-                        name='greetClientInfo.email'
-                        variant='standard'
-                        autoComplete='off'
-                        placeholder='Email'
+                        name="greetClientInfo.email"
+                        variant="standard"
+                        autoComplete="off"
+                        placeholder="Email"
                         className={classes.inputPlaceholderFontSize}
                         defaultValue={formSummary.greetClientInfo.email}
-                        style={{ width: '100%', background: 'transparent' }}
+                        style={{ width: "100%", background: "transparent" }}
                       />
                     </Grid>
                     <Grid item xs={6}>
                       <CustomFormInputForPayment
-                        variant='standard'
-                        name='greetClientInfo.phoneNumber'
-                        autoComplete='off'
+                        variant="standard"
+                        name="greetClientInfo.phoneNumber"
+                        autoComplete="off"
                         defaultValue={formSummary.greetClientInfo.phoneNumber}
-                        placeholder='Phone Number'
+                        placeholder="Phone Number"
                         className={classes.inputPlaceholderFontSize}
-                        style={{ width: '100%', background: 'transparent' }}
+                        style={{ width: "100%", background: "transparent" }}
                       />
                     </Grid>
                   </Grid>
@@ -542,9 +546,9 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
               </Grid>
             )}
             <Grid item>
-              <Grid item style={{ paddingBottom: '13px' }}>
+              <Grid item style={{ paddingBottom: "13px" }}>
                 <Typography
-                  style={{ fontSize: '15px' }}
+                  style={{ fontSize: "15px" }}
                   className={classes.paymentTexts}
                 >
                   Cardholder Information
@@ -552,23 +556,23 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
               </Grid>
               <Grid
                 container
-                direction='row'
-                justify='space-between'
+                direction="row"
+                justify="space-between"
                 spacing={2}
               >
                 <Grid item xs={6}>
                   <CustomFormInputForPayment
-                    variant='standard'
-                    name='client.firstName'
-                    autoComplete='off'
+                    variant="standard"
+                    name="client.firstName"
+                    autoComplete="off"
                     className={classes.inputPlaceholderFontSize}
                     defaultValue={formSummary.client.firstName}
                     style={{
-                      fontSize: '14px',
-                      width: '100%',
-                      background: 'transparent',
+                      fontSize: "14px",
+                      width: "100%",
+                      background: "transparent",
                     }}
-                    placeholder='First Name'
+                    placeholder="First Name"
                     error={errors.client?.firstName ? true : false}
                   />
                   {errors.client?.firstName && (
@@ -579,13 +583,13 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
                 </Grid>
                 <Grid item xs={6}>
                   <CustomFormInputForPayment
-                    variant='standard'
-                    name='client.lastName'
-                    autoComplete='off'
-                    placeholder='Last Name'
+                    variant="standard"
+                    name="client.lastName"
+                    autoComplete="off"
+                    placeholder="Last Name"
                     className={classes.inputPlaceholderFontSize}
                     defaultValue={formSummary.client.lastName}
-                    style={{ width: '100%', background: 'transparent' }}
+                    style={{ width: "100%", background: "transparent" }}
                     error={errors.client?.lastName ? true : false}
                   />
                   {errors.client?.lastName && (
@@ -599,18 +603,18 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
             <Grid item>
               <Grid
                 container
-                direction='row'
-                justify='space-between'
+                direction="row"
+                justify="space-between"
                 spacing={2}
               >
                 <Grid item xs={6}>
                   <CustomFormInputForPayment
-                    name='client.email'
-                    variant='standard'
-                    autoComplete='off'
+                    name="client.email"
+                    variant="standard"
+                    autoComplete="off"
                     className={classes.inputPlaceholderFontSize}
-                    placeholder='Email'
-                    style={{ width: '100%', background: 'transparent' }}
+                    placeholder="Email"
+                    style={{ width: "100%", background: "transparent" }}
                     defaultValue={formSummary.client.email}
                     error={errors.client?.email ? true : false}
                   />
@@ -622,13 +626,13 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
                 </Grid>
                 <Grid item xs={6}>
                   <CustomFormInputForPayment
-                    variant='standard'
-                    name='client.phoneNumber'
-                    autoComplete='off'
+                    variant="standard"
+                    name="client.phoneNumber"
+                    autoComplete="off"
                     className={classes.inputPlaceholderFontSize}
                     defaultValue={formSummary.client.phoneNumber}
-                    placeholder='Phone Number'
-                    style={{ width: '100%', background: 'transparent' }}
+                    placeholder="Phone Number"
+                    style={{ width: "100%", background: "transparent" }}
                     error={errors.client?.phoneNumber ? true : false}
                   />
                   {errors.client?.phoneNumber && (
@@ -641,28 +645,28 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
             </Grid>
             <Grid item>
               <CustomFormInputForPayment
-                name='client.address'
-                variant='standard'
-                autoComplete='off'
+                name="client.address"
+                variant="standard"
+                autoComplete="off"
                 className={classes.inputPlaceholderFontSize}
-                style={{ height: '100%', background: 'transparent' }}
-                placeholder='Address'
+                style={{ height: "100%", background: "transparent" }}
+                placeholder="Address"
                 defaultValue={formSummary.client.address}
                 fullWidth
                 error={errors.client?.address ? true : false}
               />
             </Grid>
             {errors.client?.address && (
-              <p style={{ marginLeft: '10px' }} className={classes.error}>
+              <p style={{ marginLeft: "10px" }} className={classes.error}>
                 {errors.client?.address.message}
               </p>
             )}
             <Grid item>
               <Autocomplete
-                id='combo-box-demo'
+                id="combo-box-demo"
                 options={states}
                 defaultValue={null}
-                autoComplete='off'
+                autoComplete="off"
                 autoHighlight
                 disablePortal
                 className={classes.mainAutocompleteClass}
@@ -678,8 +682,8 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
                 }}
                 getOptionLabel={(option) => option.name}
                 renderOption={(option) => (
-                  <div style={{ fontSize: '14px' }}>
-                    <span style={{ fontSize: '14px' }}>{option.code}</span>
+                  <div style={{ fontSize: "14px" }}>
+                    <span style={{ fontSize: "14px" }}>{option.code}</span>
                     {option.name} ({option.code})
                   </div>
                 )}
@@ -688,10 +692,10 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
                     {...params}
                     fullWidth
                     className={classes.inputPlaceholderFontSize}
-                    placeholder='State'
+                    placeholder="State"
                     // variant="standard"
-                    style={{ background: 'transparent' }}
-                    autoComplete='off'
+                    style={{ background: "transparent" }}
+                    autoComplete="off"
                     InputProps={{
                       ...params.InputProps,
                       style: { inputStyle },
@@ -707,23 +711,23 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
                 onChange={(event, newValue) => {
                   newValue ? setStatesId(newValue.id) : setStatesId(null)
                 }}
-                name='stateId'
+                name="stateId"
               />
               {statesIdError && <p className={classes.error}>Required</p>}
             </Grid>
             <Grid item>
               <Grid
                 container
-                direction='row'
-                justify='space-between'
+                direction="row"
+                justify="space-between"
                 spacing={2}
               >
                 <Grid item xs={6}>
                   <Autocomplete
-                    id='combo-box-demo'
+                    id="combo-box-demo"
                     options={cities}
                     key={statesId}
-                    autoComplete='off'
+                    autoComplete="off"
                     defaultValue={null}
                     autoHighlight
                     disablePortal
@@ -735,8 +739,8 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
                       paper: classes.selectedOption,
                     }}
                     renderOption={(option) => (
-                      <div style={{ fontSize: '13px' }}>
-                        <span style={{ fontSize: '14px' }}>{option.code}</span>
+                      <div style={{ fontSize: "13px" }}>
+                        <span style={{ fontSize: "14px" }}>{option.code}</span>
                         {option.name} ({option.code})
                       </div>
                     )}
@@ -745,9 +749,9 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
                         {...params}
                         fullWidth
                         className={classes.inputPlaceholderFontSize}
-                        placeholder='Cities'
-                        variant='standard'
-                        style={{ background: 'transparent' }}
+                        placeholder="Cities"
+                        variant="standard"
+                        style={{ background: "transparent" }}
                         InputProps={{
                           ...params.InputProps,
                           style: { inputStyle },
@@ -763,18 +767,18 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
                     onChange={(event, newValue) => {
                       newValue ? setCitiesId(newValue.id) : setCitiesId(null)
                     }}
-                    name='cityId'
+                    name="cityId"
                   />
                   {citiesIdError && <p className={classes.error}>Required</p>}
                 </Grid>
                 <Grid item xs={6}>
                   <CustomFormInputForPayment
-                    variant='standard'
-                    name='client.zip'
-                    autoComplete='off'
+                    variant="standard"
+                    name="client.zip"
+                    autoComplete="off"
                     className={classes.inputPlaceholderFontSize}
-                    placeholder='ZIP'
-                    style={{ width: '100%', background: 'transparent' }}
+                    placeholder="ZIP"
+                    style={{ width: "100%", background: "transparent" }}
                     defaultValue={formSummary.client.zip}
                     error={errors.client?.address ? true : false}
                   />
@@ -788,7 +792,7 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
             </Grid>
             <Grid item>
               <Typography
-                style={{ fontSize: '15px' }}
+                style={{ fontSize: "15px" }}
                 className={classes.paymentTexts}
               >
                 Card information
@@ -826,16 +830,17 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
               </CustomMaskInput> */}
 
               <Cleave
-                delimiter='-'
+                delimiter="-"
                 options={{
                   creditCard: true,
                   onCreditCardTypeChanged: handleType,
                 }}
-                name='paymentInfo.cardNumber'
+                name="paymentInfo.cardNumber"
                 error={errors.paymentInfo?.cardNumber ? true : false}
                 onChange={handleNum}
-                placeholder='Card number'
-                className='credit-card-input-by-bookinglane'
+                placeholder="Card number"
+                className="credit-card-input-by-bookinglane"
+                value={formSummary.paymentInfo.cardNumber}
               />
 
               {cardForPaymentSubmitError && (
@@ -845,26 +850,26 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
             <Grid item>
               <Grid
                 container
-                direction='row'
-                justify='space-between'
+                direction="row"
+                justify="space-between"
                 spacing={2}
               >
                 <Grid item xs={6}>
                   <CustomMaskInput
-                    name='paymentInfo.month'
-                    mask='99/99'
-                    autoComplete='off'
-                    defaultValue={`${formSummary.paymentInfo.month}/${formSummary.paymentInfo.year}`}
+                    name="paymentInfo.month"
+                    mask="99/99"
+                    autoComplete="off"
+                    // defaultValue={`${formSummary.paymentInfo.month}/${formSummary.paymentInfo.year}`}
                   >
                     {() => (
                       <TextField
-                        variant='standard'
+                        variant="standard"
                         className={classes.inputPlaceholderFontSize}
-                        placeholder='mm/yy'
-                        autoComplete='off'
+                        placeholder="mm/yy"
+                        autoComplete="off"
                         fullWidth
                         error={errors.paymentInfo?.month ? true : false}
-                        style={{ background: 'transparent' }}
+                        style={{ background: "transparent" }}
                         // inputProps={{ style: inputStyle }}
                         InputProps={{
                           // ...params.InputProps,
@@ -886,21 +891,21 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
                 </Grid>
                 <Grid item xs={6}>
                   <CustomMaskInput
-                    name='paymentInfo.cvc'
-                    type='date'
-                    mask='9999'
-                    autoComplete='off'
+                    name="paymentInfo.cvc"
+                    type="date"
+                    mask={cardType == "amex" ? "9999" : "999"}
+                    autoComplete="off"
                     defaultValue={formSummary.paymentInfo.cvc}
                   >
                     {() => (
                       <TextField
-                        variant='standard'
+                        variant="standard"
                         className={classes.inputPlaceholderFontSize}
-                        placeholder='CVV/CVC'
-                        autoComplete='off'
+                        placeholder="CVV/CVC"
+                        autoComplete="off"
                         fullWidth
                         error={errors.paymentInfo?.cvc ? true : false}
-                        style={{ background: 'transparent' }}
+                        style={{ background: "transparent" }}
                         // inputProps={{ style: inputStyle }}
                         InputProps={{
                           // ...params.InputProps,
@@ -924,7 +929,7 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
             </Grid>
             <Grid item>
               <Checkbox
-                style={{ color: '#9e9e9e' }}
+                style={{ color: "#9e9e9e" }}
                 onClick={() => setChecked(!checked)}
                 className={classes.checkboxMain}
                 InputProps={{
@@ -933,34 +938,34 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
                   },
                 }}
               />
-              <Link underline='always' style={{ color: '#BABABA' }}>
+              <Link underline="always" style={{ color: "#BABABA" }}>
                 <TermsOfUse />
               </Link>
-              <Link underline='always' style={{ color: '#BABABA' }}>
+              <Link underline="always" style={{ color: "#BABABA" }}>
                 <PrivacyPolicy />
               </Link>
             </Grid>
             <Grid item>
               <Grid
                 container
-                direction='row'
-                alignItems='center'
-                justify='center'
+                direction="row"
+                alignItems="center"
+                justify="center"
                 spacing={1}
                 className={classes.buttonGroup}
               >
                 <Grid item xs={6}>
                   <Button
-                    variant='contained'
-                    color='primary'
+                    variant="contained"
+                    color="primary"
                     fullWidth
                     onClick={back}
                     startIcon={<BackArrowIcon />}
                     className={classes.backButtonSelf}
                     style={{
-                      height: '50px',
+                      height: "50px",
 
-                      textTransform: 'none',
+                      textTransform: "none",
                     }}
                   >
                     Back
@@ -968,15 +973,15 @@ const Payment = ({ next, back, total, formSummary, setPaymentForm }) => {
                 </Grid>
                 <Grid item xs={6}>
                   <Button
-                    variant='contained'
+                    variant="contained"
                     fullWidth
-                    type='submit'
-                    color='primary'
+                    type="submit"
+                    color="primary"
                     className={classes.payButtonSelf}
                     style={{
-                      height: '50px',
+                      height: "50px",
 
-                      textTransform: 'none',
+                      textTransform: "none",
                     }}
                     disabled={!checked}
                   >
